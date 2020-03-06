@@ -1,0 +1,821 @@
+{
+  "nbformat": 4,
+  "nbformat_minor": 0,
+  "metadata": {
+    "colab": {
+      "name": "Untitled5.ipynb",
+      "provenance": [],
+      "authorship_tag": "ABX9TyP4Q4e1swNmb+RoJwOi4fSw",
+      "include_colab_link": true
+    },
+    "kernelspec": {
+      "name": "python3",
+      "display_name": "Python 3"
+    }
+  },
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "view-in-github",
+        "colab_type": "text"
+      },
+      "source": [
+        "<a href=\"https://colab.research.google.com/github/19pa1a0415/python-project/blob/master/elections%202019\" target=\"_parent\"><img src=\"https://colab.research.google.com/assets/colab-badge.svg\" alt=\"Open In Colab\"/></a>"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "id": "XFrwPlFKdNfG",
+        "colab_type": "code",
+        "colab": {
+          "base_uri": "https://localhost:8080/",
+          "height": 34
+        },
+        "outputId": "1b9560e5-efee-4bf4-ce51-2e151ea4bb37"
+      },
+      "source": [
+        "import pandas as pd\n",
+        "!ls"
+      ],
+      "execution_count": 6,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "text": [
+            "indian-candidates-for-general-election-2019.zip  sample_data\n"
+          ],
+          "name": "stdout"
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "id": "AIOQX0zadqSL",
+        "colab_type": "code",
+        "colab": {
+          "base_uri": "https://localhost:8080/",
+          "height": 252
+        },
+        "outputId": "57b12d05-7f03-439f-b142-cf4ee76df0a7"
+      },
+      "source": [
+        "x=pd.read_csv('indian-candidates-for-general-election-2019.zip')\n",
+        "print(x)\n"
+      ],
+      "execution_count": 8,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "text": [
+            "              STATE  ... TOTAL ELECTORS\n",
+            "0         Telangana  ...        1489790\n",
+            "1         Telangana  ...        1489790\n",
+            "2         Telangana  ...        1489790\n",
+            "3         Telangana  ...        1489790\n",
+            "4     Uttar Pradesh  ...        1937690\n",
+            "...             ...  ...            ...\n",
+            "2258    Maharashtra  ...        1916185\n",
+            "2259      Telangana  ...        1498666\n",
+            "2260      Telangana  ...        1498666\n",
+            "2261      Telangana  ...        1498666\n",
+            "2262      Telangana  ...        1498666\n",
+            "\n",
+            "[2263 rows x 19 columns]\n"
+          ],
+          "name": "stdout"
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "id": "AfYXl_ukgPe_",
+        "colab_type": "code",
+        "colab": {
+          "base_uri": "https://localhost:8080/",
+          "height": 400
+        },
+        "outputId": "cb833abd-c8f1-4620-e686-4bf92900900a"
+      },
+      "source": [
+        "x.head(5)"
+      ],
+      "execution_count": 11,
+      "outputs": [
+        {
+          "output_type": "execute_result",
+          "data": {
+            "text/html": [
+              "<div>\n",
+              "<style scoped>\n",
+              "    .dataframe tbody tr th:only-of-type {\n",
+              "        vertical-align: middle;\n",
+              "    }\n",
+              "\n",
+              "    .dataframe tbody tr th {\n",
+              "        vertical-align: top;\n",
+              "    }\n",
+              "\n",
+              "    .dataframe thead th {\n",
+              "        text-align: right;\n",
+              "    }\n",
+              "</style>\n",
+              "<table border=\"1\" class=\"dataframe\">\n",
+              "  <thead>\n",
+              "    <tr style=\"text-align: right;\">\n",
+              "      <th></th>\n",
+              "      <th>STATE</th>\n",
+              "      <th>CONSTITUENCY</th>\n",
+              "      <th>NAME</th>\n",
+              "      <th>WINNER</th>\n",
+              "      <th>PARTY</th>\n",
+              "      <th>SYMBOL</th>\n",
+              "      <th>GENDER</th>\n",
+              "      <th>CRIMINAL\\nCASES</th>\n",
+              "      <th>AGE</th>\n",
+              "      <th>CATEGORY</th>\n",
+              "      <th>EDUCATION</th>\n",
+              "      <th>ASSETS</th>\n",
+              "      <th>LIABILITIES</th>\n",
+              "      <th>GENERAL\\nVOTES</th>\n",
+              "      <th>POSTAL\\nVOTES</th>\n",
+              "      <th>TOTAL\\nVOTES</th>\n",
+              "      <th>OVER TOTAL ELECTORS \\nIN CONSTITUENCY</th>\n",
+              "      <th>OVER TOTAL VOTES POLLED \\nIN CONSTITUENCY</th>\n",
+              "      <th>TOTAL ELECTORS</th>\n",
+              "    </tr>\n",
+              "  </thead>\n",
+              "  <tbody>\n",
+              "    <tr>\n",
+              "      <th>0</th>\n",
+              "      <td>Telangana</td>\n",
+              "      <td>ADILABAD</td>\n",
+              "      <td>SOYAM BAPU RAO</td>\n",
+              "      <td>1</td>\n",
+              "      <td>BJP</td>\n",
+              "      <td>Lotus</td>\n",
+              "      <td>MALE</td>\n",
+              "      <td>52</td>\n",
+              "      <td>52.0</td>\n",
+              "      <td>ST</td>\n",
+              "      <td>12th Pass</td>\n",
+              "      <td>Rs 30,99,414\\n ~ 30 Lacs+</td>\n",
+              "      <td>Rs 2,31,450\\n ~ 2 Lacs+</td>\n",
+              "      <td>376892</td>\n",
+              "      <td>482</td>\n",
+              "      <td>377374</td>\n",
+              "      <td>25.330684</td>\n",
+              "      <td>35.468248</td>\n",
+              "      <td>1489790</td>\n",
+              "    </tr>\n",
+              "    <tr>\n",
+              "      <th>1</th>\n",
+              "      <td>Telangana</td>\n",
+              "      <td>ADILABAD</td>\n",
+              "      <td>Godam Nagesh</td>\n",
+              "      <td>0</td>\n",
+              "      <td>TRS</td>\n",
+              "      <td>Car</td>\n",
+              "      <td>MALE</td>\n",
+              "      <td>0</td>\n",
+              "      <td>54.0</td>\n",
+              "      <td>ST</td>\n",
+              "      <td>Post Graduate</td>\n",
+              "      <td>Rs 1,84,77,888\\n ~ 1 Crore+</td>\n",
+              "      <td>Rs 8,47,000\\n ~ 8 Lacs+</td>\n",
+              "      <td>318665</td>\n",
+              "      <td>149</td>\n",
+              "      <td>318814</td>\n",
+              "      <td>21.399929</td>\n",
+              "      <td>29.964370</td>\n",
+              "      <td>1489790</td>\n",
+              "    </tr>\n",
+              "    <tr>\n",
+              "      <th>2</th>\n",
+              "      <td>Telangana</td>\n",
+              "      <td>ADILABAD</td>\n",
+              "      <td>RATHOD RAMESH</td>\n",
+              "      <td>0</td>\n",
+              "      <td>INC</td>\n",
+              "      <td>Hand</td>\n",
+              "      <td>MALE</td>\n",
+              "      <td>3</td>\n",
+              "      <td>52.0</td>\n",
+              "      <td>ST</td>\n",
+              "      <td>12th Pass</td>\n",
+              "      <td>Rs 3,64,91,000\\n ~ 3 Crore+</td>\n",
+              "      <td>Rs 1,53,00,000\\n ~ 1 Crore+</td>\n",
+              "      <td>314057</td>\n",
+              "      <td>181</td>\n",
+              "      <td>314238</td>\n",
+              "      <td>21.092771</td>\n",
+              "      <td>29.534285</td>\n",
+              "      <td>1489790</td>\n",
+              "    </tr>\n",
+              "    <tr>\n",
+              "      <th>3</th>\n",
+              "      <td>Telangana</td>\n",
+              "      <td>ADILABAD</td>\n",
+              "      <td>NOTA</td>\n",
+              "      <td>0</td>\n",
+              "      <td>NOTA</td>\n",
+              "      <td>NaN</td>\n",
+              "      <td>NaN</td>\n",
+              "      <td>NaN</td>\n",
+              "      <td>NaN</td>\n",
+              "      <td>NaN</td>\n",
+              "      <td>NaN</td>\n",
+              "      <td>NaN</td>\n",
+              "      <td>NaN</td>\n",
+              "      <td>13030</td>\n",
+              "      <td>6</td>\n",
+              "      <td>13036</td>\n",
+              "      <td>0.875023</td>\n",
+              "      <td>1.225214</td>\n",
+              "      <td>1489790</td>\n",
+              "    </tr>\n",
+              "    <tr>\n",
+              "      <th>4</th>\n",
+              "      <td>Uttar Pradesh</td>\n",
+              "      <td>AGRA</td>\n",
+              "      <td>Satyapal Singh Baghel</td>\n",
+              "      <td>1</td>\n",
+              "      <td>BJP</td>\n",
+              "      <td>Lotus</td>\n",
+              "      <td>MALE</td>\n",
+              "      <td>5</td>\n",
+              "      <td>58.0</td>\n",
+              "      <td>SC</td>\n",
+              "      <td>Doctorate</td>\n",
+              "      <td>Rs 7,42,74,036\\n ~ 7 Crore+</td>\n",
+              "      <td>Rs 86,06,522\\n ~ 86 Lacs+</td>\n",
+              "      <td>644459</td>\n",
+              "      <td>2416</td>\n",
+              "      <td>646875</td>\n",
+              "      <td>33.383823</td>\n",
+              "      <td>56.464615</td>\n",
+              "      <td>1937690</td>\n",
+              "    </tr>\n",
+              "  </tbody>\n",
+              "</table>\n",
+              "</div>"
+            ],
+            "text/plain": [
+              "           STATE  ... TOTAL ELECTORS\n",
+              "0      Telangana  ...        1489790\n",
+              "1      Telangana  ...        1489790\n",
+              "2      Telangana  ...        1489790\n",
+              "3      Telangana  ...        1489790\n",
+              "4  Uttar Pradesh  ...        1937690\n",
+              "\n",
+              "[5 rows x 19 columns]"
+            ]
+          },
+          "metadata": {
+            "tags": []
+          },
+          "execution_count": 11
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "id": "258bQnwqgTEx",
+        "colab_type": "code",
+        "colab": {
+          "base_uri": "https://localhost:8080/",
+          "height": 400
+        },
+        "outputId": "4bcb4a7d-171e-49fb-a7c5-471ae5caa40d"
+      },
+      "source": [
+        "x.tail(5)    "
+      ],
+      "execution_count": 12,
+      "outputs": [
+        {
+          "output_type": "execute_result",
+          "data": {
+            "text/html": [
+              "<div>\n",
+              "<style scoped>\n",
+              "    .dataframe tbody tr th:only-of-type {\n",
+              "        vertical-align: middle;\n",
+              "    }\n",
+              "\n",
+              "    .dataframe tbody tr th {\n",
+              "        vertical-align: top;\n",
+              "    }\n",
+              "\n",
+              "    .dataframe thead th {\n",
+              "        text-align: right;\n",
+              "    }\n",
+              "</style>\n",
+              "<table border=\"1\" class=\"dataframe\">\n",
+              "  <thead>\n",
+              "    <tr style=\"text-align: right;\">\n",
+              "      <th></th>\n",
+              "      <th>STATE</th>\n",
+              "      <th>CONSTITUENCY</th>\n",
+              "      <th>NAME</th>\n",
+              "      <th>WINNER</th>\n",
+              "      <th>PARTY</th>\n",
+              "      <th>SYMBOL</th>\n",
+              "      <th>GENDER</th>\n",
+              "      <th>CRIMINAL\\nCASES</th>\n",
+              "      <th>AGE</th>\n",
+              "      <th>CATEGORY</th>\n",
+              "      <th>EDUCATION</th>\n",
+              "      <th>ASSETS</th>\n",
+              "      <th>LIABILITIES</th>\n",
+              "      <th>GENERAL\\nVOTES</th>\n",
+              "      <th>POSTAL\\nVOTES</th>\n",
+              "      <th>TOTAL\\nVOTES</th>\n",
+              "      <th>OVER TOTAL ELECTORS \\nIN CONSTITUENCY</th>\n",
+              "      <th>OVER TOTAL VOTES POLLED \\nIN CONSTITUENCY</th>\n",
+              "      <th>TOTAL ELECTORS</th>\n",
+              "    </tr>\n",
+              "  </thead>\n",
+              "  <tbody>\n",
+              "    <tr>\n",
+              "      <th>2258</th>\n",
+              "      <td>Maharashtra</td>\n",
+              "      <td>YAVATMAL-WASHIM</td>\n",
+              "      <td>Anil Jayram Rathod</td>\n",
+              "      <td>0</td>\n",
+              "      <td>IND</td>\n",
+              "      <td>SHIP</td>\n",
+              "      <td>MALE</td>\n",
+              "      <td>0</td>\n",
+              "      <td>43.0</td>\n",
+              "      <td>GENERAL</td>\n",
+              "      <td>Post Graduate</td>\n",
+              "      <td>Rs 48,90,000\\n ~ 48 Lacs+</td>\n",
+              "      <td>Rs 10,20,000\\n ~ 10 Lacs+</td>\n",
+              "      <td>14661</td>\n",
+              "      <td>25</td>\n",
+              "      <td>14686</td>\n",
+              "      <td>0.766419</td>\n",
+              "      <td>1.250060</td>\n",
+              "      <td>1916185</td>\n",
+              "    </tr>\n",
+              "    <tr>\n",
+              "      <th>2259</th>\n",
+              "      <td>Telangana</td>\n",
+              "      <td>ZAHIRABAD</td>\n",
+              "      <td>B.B.PATIL</td>\n",
+              "      <td>1</td>\n",
+              "      <td>TRS</td>\n",
+              "      <td>Car</td>\n",
+              "      <td>MALE</td>\n",
+              "      <td>18</td>\n",
+              "      <td>63.0</td>\n",
+              "      <td>GENERAL</td>\n",
+              "      <td>Graduate</td>\n",
+              "      <td>Rs 1,28,78,51,556\\n ~ 128 Crore+</td>\n",
+              "      <td>Rs 1,15,35,000\\n ~ 1 Crore+</td>\n",
+              "      <td>434066</td>\n",
+              "      <td>178</td>\n",
+              "      <td>434244</td>\n",
+              "      <td>28.975369</td>\n",
+              "      <td>41.574183</td>\n",
+              "      <td>1498666</td>\n",
+              "    </tr>\n",
+              "    <tr>\n",
+              "      <th>2260</th>\n",
+              "      <td>Telangana</td>\n",
+              "      <td>ZAHIRABAD</td>\n",
+              "      <td>MADAN MOHAN RAO</td>\n",
+              "      <td>0</td>\n",
+              "      <td>INC</td>\n",
+              "      <td>Hand</td>\n",
+              "      <td>MALE</td>\n",
+              "      <td>0</td>\n",
+              "      <td>49.0</td>\n",
+              "      <td>GENERAL</td>\n",
+              "      <td>Post Graduate</td>\n",
+              "      <td>Rs 90,36,63,001\\n ~ 90 Crore+</td>\n",
+              "      <td>Rs 0\\n ~</td>\n",
+              "      <td>427900</td>\n",
+              "      <td>115</td>\n",
+              "      <td>428015</td>\n",
+              "      <td>28.559732</td>\n",
+              "      <td>40.977823</td>\n",
+              "      <td>1498666</td>\n",
+              "    </tr>\n",
+              "    <tr>\n",
+              "      <th>2261</th>\n",
+              "      <td>Telangana</td>\n",
+              "      <td>ZAHIRABAD</td>\n",
+              "      <td>BANALA LAXMA REDDY</td>\n",
+              "      <td>0</td>\n",
+              "      <td>BJP</td>\n",
+              "      <td>Lotus</td>\n",
+              "      <td>MALE</td>\n",
+              "      <td>3</td>\n",
+              "      <td>47.0</td>\n",
+              "      <td>GENERAL</td>\n",
+              "      <td>12th Pass</td>\n",
+              "      <td>Rs 5,85,77,327\\n ~ 5 Crore+</td>\n",
+              "      <td>Rs 52,50,000\\n ~ 52 Lacs+</td>\n",
+              "      <td>138731</td>\n",
+              "      <td>216</td>\n",
+              "      <td>138947</td>\n",
+              "      <td>9.271379</td>\n",
+              "      <td>13.302678</td>\n",
+              "      <td>1498666</td>\n",
+              "    </tr>\n",
+              "    <tr>\n",
+              "      <th>2262</th>\n",
+              "      <td>Telangana</td>\n",
+              "      <td>ZAHIRABAD</td>\n",
+              "      <td>NOTA</td>\n",
+              "      <td>0</td>\n",
+              "      <td>NOTA</td>\n",
+              "      <td>NaN</td>\n",
+              "      <td>NaN</td>\n",
+              "      <td>NaN</td>\n",
+              "      <td>NaN</td>\n",
+              "      <td>NaN</td>\n",
+              "      <td>NaN</td>\n",
+              "      <td>NaN</td>\n",
+              "      <td>NaN</td>\n",
+              "      <td>11138</td>\n",
+              "      <td>2</td>\n",
+              "      <td>11140</td>\n",
+              "      <td>0.743328</td>\n",
+              "      <td>1.066535</td>\n",
+              "      <td>1498666</td>\n",
+              "    </tr>\n",
+              "  </tbody>\n",
+              "</table>\n",
+              "</div>"
+            ],
+            "text/plain": [
+              "            STATE  ... TOTAL ELECTORS\n",
+              "2258  Maharashtra  ...        1916185\n",
+              "2259    Telangana  ...        1498666\n",
+              "2260    Telangana  ...        1498666\n",
+              "2261    Telangana  ...        1498666\n",
+              "2262    Telangana  ...        1498666\n",
+              "\n",
+              "[5 rows x 19 columns]"
+            ]
+          },
+          "metadata": {
+            "tags": []
+          },
+          "execution_count": 12
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "id": "D-wfPDVJgb1x",
+        "colab_type": "code",
+        "colab": {
+          "base_uri": "https://localhost:8080/",
+          "height": 118
+        },
+        "outputId": "c32b4d30-9dff-4965-912a-077d156e2068"
+      },
+      "source": [
+        "x.columns"
+      ],
+      "execution_count": 14,
+      "outputs": [
+        {
+          "output_type": "execute_result",
+          "data": {
+            "text/plain": [
+              "Index(['STATE', 'CONSTITUENCY', 'NAME', 'WINNER', 'PARTY', 'SYMBOL', 'GENDER',\n",
+              "       'CRIMINAL\\nCASES', 'AGE', 'CATEGORY', 'EDUCATION', 'ASSETS',\n",
+              "       'LIABILITIES', 'GENERAL\\nVOTES', 'POSTAL\\nVOTES', 'TOTAL\\nVOTES',\n",
+              "       'OVER TOTAL ELECTORS \\nIN CONSTITUENCY',\n",
+              "       'OVER TOTAL VOTES POLLED \\nIN CONSTITUENCY', 'TOTAL ELECTORS'],\n",
+              "      dtype='object')"
+            ]
+          },
+          "metadata": {
+            "tags": []
+          },
+          "execution_count": 14
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "id": "6GLurONUgfkQ",
+        "colab_type": "code",
+        "colab": {
+          "base_uri": "https://localhost:8080/",
+          "height": 252
+        },
+        "outputId": "023441dd-bb78-47f3-8898-9e09cd71d73a"
+      },
+      "source": [
+        "x.fillna"
+      ],
+      "execution_count": 15,
+      "outputs": [
+        {
+          "output_type": "execute_result",
+          "data": {
+            "text/plain": [
+              "<bound method DataFrame.fillna of               STATE  ... TOTAL ELECTORS\n",
+              "0         Telangana  ...        1489790\n",
+              "1         Telangana  ...        1489790\n",
+              "2         Telangana  ...        1489790\n",
+              "3         Telangana  ...        1489790\n",
+              "4     Uttar Pradesh  ...        1937690\n",
+              "...             ...  ...            ...\n",
+              "2258    Maharashtra  ...        1916185\n",
+              "2259      Telangana  ...        1498666\n",
+              "2260      Telangana  ...        1498666\n",
+              "2261      Telangana  ...        1498666\n",
+              "2262      Telangana  ...        1498666\n",
+              "\n",
+              "[2263 rows x 19 columns]>"
+            ]
+          },
+          "metadata": {
+            "tags": []
+          },
+          "execution_count": 15
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "id": "mCUBYNR3gtmv",
+        "colab_type": "code",
+        "colab": {
+          "base_uri": "https://localhost:8080/",
+          "height": 162
+        },
+        "outputId": "9795b62c-db3d-49a4-838c-e6294a05a663"
+      },
+      "source": [
+        "x.index()"
+      ],
+      "execution_count": 18,
+      "outputs": [
+        {
+          "output_type": "error",
+          "ename": "TypeError",
+          "evalue": "ignored",
+          "traceback": [
+            "\u001b[0;31m---------------------------------------------------------------------------\u001b[0m",
+            "\u001b[0;31mTypeError\u001b[0m                                 Traceback (most recent call last)",
+            "\u001b[0;32m<ipython-input-18-1f9714d9023b>\u001b[0m in \u001b[0;36m<module>\u001b[0;34m()\u001b[0m\n\u001b[0;32m----> 1\u001b[0;31m \u001b[0mx\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mindex\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0;34m'state'\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m",
+            "\u001b[0;31mTypeError\u001b[0m: 'RangeIndex' object is not callable"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "id": "kJuDagzAhf-O",
+        "colab_type": "code",
+        "colab": {
+          "base_uri": "https://localhost:8080/",
+          "height": 34
+        },
+        "outputId": "0ef621d4-33b0-411c-8f55-fc40d2394575"
+      },
+      "source": [
+        "x.size"
+      ],
+      "execution_count": 20,
+      "outputs": [
+        {
+          "output_type": "execute_result",
+          "data": {
+            "text/plain": [
+              "42997"
+            ]
+          },
+          "metadata": {
+            "tags": []
+          },
+          "execution_count": 20
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "id": "HbIAG15SiAUu",
+        "colab_type": "code",
+        "colab": {
+          "base_uri": "https://localhost:8080/",
+          "height": 34
+        },
+        "outputId": "e69c3ba2-fbd2-44e0-b31e-8597b28887b9"
+      },
+      "source": [
+        "x.shape"
+      ],
+      "execution_count": 21,
+      "outputs": [
+        {
+          "output_type": "execute_result",
+          "data": {
+            "text/plain": [
+              "(2263, 19)"
+            ]
+          },
+          "metadata": {
+            "tags": []
+          },
+          "execution_count": 21
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "id": "fNAOjGJficId",
+        "colab_type": "code",
+        "colab": {
+          "base_uri": "https://localhost:8080/",
+          "height": 34
+        },
+        "outputId": "ad561c58-80db-4d64-81c1-4e6d6bcba45b"
+      },
+      "source": [
+        "x.ndim"
+      ],
+      "execution_count": 22,
+      "outputs": [
+        {
+          "output_type": "execute_result",
+          "data": {
+            "text/plain": [
+              "2"
+            ]
+          },
+          "metadata": {
+            "tags": []
+          },
+          "execution_count": 22
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "id": "2602PobZimMM",
+        "colab_type": "code",
+        "colab": {
+          "base_uri": "https://localhost:8080/",
+          "height": 34
+        },
+        "outputId": "6a83cd02-a13e-4724-ea13-47b8db132de2"
+      },
+      "source": [
+        "x.at[1,'STATE']"
+      ],
+      "execution_count": 27,
+      "outputs": [
+        {
+          "output_type": "execute_result",
+          "data": {
+            "text/plain": [
+              "'Telangana'"
+            ]
+          },
+          "metadata": {
+            "tags": []
+          },
+          "execution_count": 27
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "id": "zvzUaepijA4M",
+        "colab_type": "code",
+        "colab": {
+          "base_uri": "https://localhost:8080/",
+          "height": 128
+        },
+        "outputId": "de157d8f-0927-40bf-c758-8a78b8088f0f"
+      },
+      "source": [
+        "x.loc[;,'STATE']"
+      ],
+      "execution_count": 32,
+      "outputs": [
+        {
+          "output_type": "error",
+          "ename": "SyntaxError",
+          "evalue": "ignored",
+          "traceback": [
+            "\u001b[0;36m  File \u001b[0;32m\"<ipython-input-32-7e4e34108b14>\"\u001b[0;36m, line \u001b[0;32m1\u001b[0m\n\u001b[0;31m    x.loc[;,'STATE']\u001b[0m\n\u001b[0m          ^\u001b[0m\n\u001b[0;31mSyntaxError\u001b[0m\u001b[0;31m:\u001b[0m invalid syntax\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "id": "iAdsWc_sjqSL",
+        "colab_type": "code",
+        "colab": {
+          "base_uri": "https://localhost:8080/",
+          "height": 353
+        },
+        "outputId": "d2009549-ed09-4acf-ab63-cc9b79d00364"
+      },
+      "source": [
+        "x.dtypes"
+      ],
+      "execution_count": 33,
+      "outputs": [
+        {
+          "output_type": "execute_result",
+          "data": {
+            "text/plain": [
+              "STATE                                         object\n",
+              "CONSTITUENCY                                  object\n",
+              "NAME                                          object\n",
+              "WINNER                                         int64\n",
+              "PARTY                                         object\n",
+              "SYMBOL                                        object\n",
+              "GENDER                                        object\n",
+              "CRIMINAL\\nCASES                               object\n",
+              "AGE                                          float64\n",
+              "CATEGORY                                      object\n",
+              "EDUCATION                                     object\n",
+              "ASSETS                                        object\n",
+              "LIABILITIES                                   object\n",
+              "GENERAL\\nVOTES                                 int64\n",
+              "POSTAL\\nVOTES                                  int64\n",
+              "TOTAL\\nVOTES                                   int64\n",
+              "OVER TOTAL ELECTORS \\nIN CONSTITUENCY        float64\n",
+              "OVER TOTAL VOTES POLLED \\nIN CONSTITUENCY    float64\n",
+              "TOTAL ELECTORS                                 int64\n",
+              "dtype: object"
+            ]
+          },
+          "metadata": {
+            "tags": []
+          },
+          "execution_count": 33
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "id": "XmztUUf_kVUJ",
+        "colab_type": "code",
+        "colab": {
+          "base_uri": "https://localhost:8080/",
+          "height": 162
+        },
+        "outputId": "ba47ad58-ad8f-44a1-8577-445bdd0368c9"
+      },
+      "source": [
+        ""
+      ],
+      "execution_count": 34,
+      "outputs": [
+        {
+          "output_type": "error",
+          "ename": "NameError",
+          "evalue": "ignored",
+          "traceback": [
+            "\u001b[0;31m---------------------------------------------------------------------------\u001b[0m",
+            "\u001b[0;31mNameError\u001b[0m                                 Traceback (most recent call last)",
+            "\u001b[0;32m<ipython-input-34-02f9bd30b61f>\u001b[0m in \u001b[0;36m<module>\u001b[0;34m()\u001b[0m\n\u001b[0;32m----> 1\u001b[0;31m \u001b[0mx1\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mindex\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m",
+            "\u001b[0;31mNameError\u001b[0m: name 'x1' is not defined"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "id": "DQ4pCHVpk2F5",
+        "colab_type": "code",
+        "colab": {}
+      },
+      "source": [
+        ""
+      ],
+      "execution_count": 0,
+      "outputs": []
+    }
+  ]
+}
