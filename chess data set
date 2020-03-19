@@ -1,0 +1,471 @@
+{
+  "nbformat": 4,
+  "nbformat_minor": 0,
+  "metadata": {
+    "colab": {
+      "name": "Untitled1.ipynb",
+      "provenance": [],
+      "authorship_tag": "ABX9TyPVcioncxHigLWjXmFMqkvb",
+      "include_colab_link": true
+    },
+    "kernelspec": {
+      "name": "python3",
+      "display_name": "Python 3"
+    }
+  },
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "view-in-github",
+        "colab_type": "text"
+      },
+      "source": [
+        "<a href=\"https://colab.research.google.com/github/19pa1a0415/python-project/blob/master/chess%20data%20set\" target=\"_parent\"><img src=\"https://colab.research.google.com/assets/colab-badge.svg\" alt=\"Open In Colab\"/></a>"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "id": "h577xrnvrwzR",
+        "colab_type": "code",
+        "colab": {
+          "base_uri": "https://localhost:8080/",
+          "height": 34
+        },
+        "outputId": "552cd2ce-5b22-457f-c56f-af16d0014c6d"
+      },
+      "source": [
+        "import pandas as pd\n",
+        "!ls\n"
+      ],
+      "execution_count": 1,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "text": [
+            "sample_data  top-chess-players.zip\n"
+          ],
+          "name": "stdout"
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "id": "uVk-Iz6GyRt1",
+        "colab_type": "code",
+        "colab": {}
+      },
+      "source": [
+        ""
+      ],
+      "execution_count": 0,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "id": "UAdUuj_dxoZm",
+        "colab_type": "code",
+        "colab": {
+          "base_uri": "https://localhost:8080/",
+          "height": 252
+        },
+        "outputId": "4402d18f-1ddd-497e-d110-8c40967cefb9"
+      },
+      "source": [
+        "x=pd.read_csv(\"top-chess-players.zip\")\n",
+        "print(x)"
+      ],
+      "execution_count": 2,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "text": [
+            "      ranking_date  rank                    name  ... rating games  birth_year\n",
+            "0         27-07-00     1         Kasparov, Garry  ...   2849    35        1963\n",
+            "1         27-07-00     2       Kramnik, Vladimir  ...   2770    23        1975\n",
+            "2         27-07-00     3      Anand, Viswanathan  ...   2762    23        1969\n",
+            "3         27-07-00     4   Morozevich, Alexander  ...   2756    28        1977\n",
+            "4         27-07-00     5          Adams, Michael  ...   2755    38        1971\n",
+            "...            ...   ...                     ...  ...    ...   ...         ...\n",
+            "11506     27-06-17    96          Safarli, Eltaj  ...   2656     9        1992\n",
+            "11507     27-06-17    97          Shirov, Alexei  ...   2656     9        1972\n",
+            "11508     27-06-17    98  Granda Zuniga, Julio E  ...   2656     4        1967\n",
+            "11509     27-06-17    99             Robson, Ray  ...   2656     0        1994\n",
+            "11510     27-06-17   100        Grandelius, Nils  ...   2655    10        1993\n",
+            "\n",
+            "[11511 rows x 8 columns]\n"
+          ],
+          "name": "stdout"
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "id": "E4ctXVa_yf1d",
+        "colab_type": "code",
+        "colab": {
+          "base_uri": "https://localhost:8080/",
+          "height": 67
+        },
+        "outputId": "52afbf20-aee1-454b-db3b-5b7f20ccd4b4"
+      },
+      "source": [
+        "x.columns"
+      ],
+      "execution_count": 3,
+      "outputs": [
+        {
+          "output_type": "execute_result",
+          "data": {
+            "text/plain": [
+              "Index(['ranking_date', 'rank', 'name', 'title', 'country', 'rating', 'games',\n",
+              "       'birth_year'],\n",
+              "      dtype='object')"
+            ]
+          },
+          "metadata": {
+            "tags": []
+          },
+          "execution_count": 3
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "id": "8-2VGEzjylFk",
+        "colab_type": "code",
+        "colab": {
+          "base_uri": "https://localhost:8080/",
+          "height": 195
+        },
+        "outputId": "ea0f8db7-cfab-4ba4-8848-348f6d1ab6a0"
+      },
+      "source": [
+        "x.head(5)"
+      ],
+      "execution_count": 4,
+      "outputs": [
+        {
+          "output_type": "execute_result",
+          "data": {
+            "text/html": [
+              "<div>\n",
+              "<style scoped>\n",
+              "    .dataframe tbody tr th:only-of-type {\n",
+              "        vertical-align: middle;\n",
+              "    }\n",
+              "\n",
+              "    .dataframe tbody tr th {\n",
+              "        vertical-align: top;\n",
+              "    }\n",
+              "\n",
+              "    .dataframe thead th {\n",
+              "        text-align: right;\n",
+              "    }\n",
+              "</style>\n",
+              "<table border=\"1\" class=\"dataframe\">\n",
+              "  <thead>\n",
+              "    <tr style=\"text-align: right;\">\n",
+              "      <th></th>\n",
+              "      <th>ranking_date</th>\n",
+              "      <th>rank</th>\n",
+              "      <th>name</th>\n",
+              "      <th>title</th>\n",
+              "      <th>country</th>\n",
+              "      <th>rating</th>\n",
+              "      <th>games</th>\n",
+              "      <th>birth_year</th>\n",
+              "    </tr>\n",
+              "  </thead>\n",
+              "  <tbody>\n",
+              "    <tr>\n",
+              "      <th>0</th>\n",
+              "      <td>27-07-00</td>\n",
+              "      <td>1</td>\n",
+              "      <td>Kasparov, Garry</td>\n",
+              "      <td>g</td>\n",
+              "      <td>RUS</td>\n",
+              "      <td>2849</td>\n",
+              "      <td>35</td>\n",
+              "      <td>1963</td>\n",
+              "    </tr>\n",
+              "    <tr>\n",
+              "      <th>1</th>\n",
+              "      <td>27-07-00</td>\n",
+              "      <td>2</td>\n",
+              "      <td>Kramnik, Vladimir</td>\n",
+              "      <td>g</td>\n",
+              "      <td>RUS</td>\n",
+              "      <td>2770</td>\n",
+              "      <td>23</td>\n",
+              "      <td>1975</td>\n",
+              "    </tr>\n",
+              "    <tr>\n",
+              "      <th>2</th>\n",
+              "      <td>27-07-00</td>\n",
+              "      <td>3</td>\n",
+              "      <td>Anand, Viswanathan</td>\n",
+              "      <td>g</td>\n",
+              "      <td>IND</td>\n",
+              "      <td>2762</td>\n",
+              "      <td>23</td>\n",
+              "      <td>1969</td>\n",
+              "    </tr>\n",
+              "    <tr>\n",
+              "      <th>3</th>\n",
+              "      <td>27-07-00</td>\n",
+              "      <td>4</td>\n",
+              "      <td>Morozevich, Alexander</td>\n",
+              "      <td>g</td>\n",
+              "      <td>RUS</td>\n",
+              "      <td>2756</td>\n",
+              "      <td>28</td>\n",
+              "      <td>1977</td>\n",
+              "    </tr>\n",
+              "    <tr>\n",
+              "      <th>4</th>\n",
+              "      <td>27-07-00</td>\n",
+              "      <td>5</td>\n",
+              "      <td>Adams, Michael</td>\n",
+              "      <td>g</td>\n",
+              "      <td>ENG</td>\n",
+              "      <td>2755</td>\n",
+              "      <td>38</td>\n",
+              "      <td>1971</td>\n",
+              "    </tr>\n",
+              "  </tbody>\n",
+              "</table>\n",
+              "</div>"
+            ],
+            "text/plain": [
+              "  ranking_date  rank                   name  ... rating games  birth_year\n",
+              "0     27-07-00     1        Kasparov, Garry  ...   2849    35        1963\n",
+              "1     27-07-00     2      Kramnik, Vladimir  ...   2770    23        1975\n",
+              "2     27-07-00     3     Anand, Viswanathan  ...   2762    23        1969\n",
+              "3     27-07-00     4  Morozevich, Alexander  ...   2756    28        1977\n",
+              "4     27-07-00     5         Adams, Michael  ...   2755    38        1971\n",
+              "\n",
+              "[5 rows x 8 columns]"
+            ]
+          },
+          "metadata": {
+            "tags": []
+          },
+          "execution_count": 4
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "id": "J7H_DsAUytWm",
+        "colab_type": "code",
+        "colab": {
+          "base_uri": "https://localhost:8080/",
+          "height": 195
+        },
+        "outputId": "50f3fa6f-559c-4ede-9a87-ae915bea12f6"
+      },
+      "source": [
+        "x.tail(5)"
+      ],
+      "execution_count": 5,
+      "outputs": [
+        {
+          "output_type": "execute_result",
+          "data": {
+            "text/html": [
+              "<div>\n",
+              "<style scoped>\n",
+              "    .dataframe tbody tr th:only-of-type {\n",
+              "        vertical-align: middle;\n",
+              "    }\n",
+              "\n",
+              "    .dataframe tbody tr th {\n",
+              "        vertical-align: top;\n",
+              "    }\n",
+              "\n",
+              "    .dataframe thead th {\n",
+              "        text-align: right;\n",
+              "    }\n",
+              "</style>\n",
+              "<table border=\"1\" class=\"dataframe\">\n",
+              "  <thead>\n",
+              "    <tr style=\"text-align: right;\">\n",
+              "      <th></th>\n",
+              "      <th>ranking_date</th>\n",
+              "      <th>rank</th>\n",
+              "      <th>name</th>\n",
+              "      <th>title</th>\n",
+              "      <th>country</th>\n",
+              "      <th>rating</th>\n",
+              "      <th>games</th>\n",
+              "      <th>birth_year</th>\n",
+              "    </tr>\n",
+              "  </thead>\n",
+              "  <tbody>\n",
+              "    <tr>\n",
+              "      <th>11506</th>\n",
+              "      <td>27-06-17</td>\n",
+              "      <td>96</td>\n",
+              "      <td>Safarli, Eltaj</td>\n",
+              "      <td>g</td>\n",
+              "      <td>AZE</td>\n",
+              "      <td>2656</td>\n",
+              "      <td>9</td>\n",
+              "      <td>1992</td>\n",
+              "    </tr>\n",
+              "    <tr>\n",
+              "      <th>11507</th>\n",
+              "      <td>27-06-17</td>\n",
+              "      <td>97</td>\n",
+              "      <td>Shirov, Alexei</td>\n",
+              "      <td>g</td>\n",
+              "      <td>LAT</td>\n",
+              "      <td>2656</td>\n",
+              "      <td>9</td>\n",
+              "      <td>1972</td>\n",
+              "    </tr>\n",
+              "    <tr>\n",
+              "      <th>11508</th>\n",
+              "      <td>27-06-17</td>\n",
+              "      <td>98</td>\n",
+              "      <td>Granda Zuniga, Julio E</td>\n",
+              "      <td>g</td>\n",
+              "      <td>PER</td>\n",
+              "      <td>2656</td>\n",
+              "      <td>4</td>\n",
+              "      <td>1967</td>\n",
+              "    </tr>\n",
+              "    <tr>\n",
+              "      <th>11509</th>\n",
+              "      <td>27-06-17</td>\n",
+              "      <td>99</td>\n",
+              "      <td>Robson, Ray</td>\n",
+              "      <td>g</td>\n",
+              "      <td>USA</td>\n",
+              "      <td>2656</td>\n",
+              "      <td>0</td>\n",
+              "      <td>1994</td>\n",
+              "    </tr>\n",
+              "    <tr>\n",
+              "      <th>11510</th>\n",
+              "      <td>27-06-17</td>\n",
+              "      <td>100</td>\n",
+              "      <td>Grandelius, Nils</td>\n",
+              "      <td>g</td>\n",
+              "      <td>SWE</td>\n",
+              "      <td>2655</td>\n",
+              "      <td>10</td>\n",
+              "      <td>1993</td>\n",
+              "    </tr>\n",
+              "  </tbody>\n",
+              "</table>\n",
+              "</div>"
+            ],
+            "text/plain": [
+              "      ranking_date  rank                    name  ... rating games  birth_year\n",
+              "11506     27-06-17    96          Safarli, Eltaj  ...   2656     9        1992\n",
+              "11507     27-06-17    97          Shirov, Alexei  ...   2656     9        1972\n",
+              "11508     27-06-17    98  Granda Zuniga, Julio E  ...   2656     4        1967\n",
+              "11509     27-06-17    99             Robson, Ray  ...   2656     0        1994\n",
+              "11510     27-06-17   100        Grandelius, Nils  ...   2655    10        1993\n",
+              "\n",
+              "[5 rows x 8 columns]"
+            ]
+          },
+          "metadata": {
+            "tags": []
+          },
+          "execution_count": 5
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "id": "-e_TVtlgzDP2",
+        "colab_type": "code",
+        "colab": {
+          "base_uri": "https://localhost:8080/",
+          "height": 34
+        },
+        "outputId": "b4dd42d0-ce15-4fd1-bfd6-05fc03dc2fb4"
+      },
+      "source": [
+        "x.index"
+      ],
+      "execution_count": 6,
+      "outputs": [
+        {
+          "output_type": "execute_result",
+          "data": {
+            "text/plain": [
+              "RangeIndex(start=0, stop=11511, step=1)"
+            ]
+          },
+          "metadata": {
+            "tags": []
+          },
+          "execution_count": 6
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "id": "glnrGPRDzxrw",
+        "colab_type": "code",
+        "colab": {
+          "base_uri": "https://localhost:8080/",
+          "height": 168
+        },
+        "outputId": "6c1c87f7-d4c9-4d8e-9a20-2ebbcaa49e63"
+      },
+      "source": [
+        "x.dtypes"
+      ],
+      "execution_count": 8,
+      "outputs": [
+        {
+          "output_type": "execute_result",
+          "data": {
+            "text/plain": [
+              "ranking_date    object\n",
+              "rank             int64\n",
+              "name            object\n",
+              "title           object\n",
+              "country         object\n",
+              "rating           int64\n",
+              "games            int64\n",
+              "birth_year       int64\n",
+              "dtype: object"
+            ]
+          },
+          "metadata": {
+            "tags": []
+          },
+          "execution_count": 8
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "id": "lu1ufP0b0Jhw",
+        "colab_type": "code",
+        "colab": {}
+      },
+      "source": [
+        ""
+      ],
+      "execution_count": 0,
+      "outputs": []
+    }
+  ]
+}
